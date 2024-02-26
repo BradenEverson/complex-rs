@@ -55,6 +55,42 @@ impl std::ops::Rem<c32> for c32 {
     }
 }
 
+impl std::ops::AddAssign<c32> for c32 {
+    fn add_assign(&mut self, rhs: c32) {
+        self.real += rhs.real;
+        self.imaginary += rhs.imaginary;
+    }
+}
+
+
+impl std::ops::SubAssign<c32> for c32 {
+    fn sub_assign(&mut self, rhs: c32) {
+        self.real -= rhs.real;
+        self.imaginary -= rhs.imaginary;
+    }
+}
+
+impl std::ops::MulAssign<c32> for c32 {
+    fn mul_assign(&mut self, rhs: c32) {
+        self.real *= rhs.real;
+        self.imaginary *= rhs.imaginary;
+    }
+}
+
+impl std::ops::DivAssign<c32> for c32 {
+    fn div_assign(&mut self, rhs: c32) {
+        self.real /= rhs.real;
+        self.imaginary /= rhs.imaginary;
+    }
+}
+
+impl std::ops::RemAssign<c32> for c32 {
+    fn rem_assign(&mut self, rhs: c32) {
+        self.real %= rhs.real;
+        self.imaginary %= rhs.imaginary;
+    }
+}
+
 impl c32 {
     pub fn new(real: i16, imaginary: i16) -> c32 {
         c32 { real, imaginary }
