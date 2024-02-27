@@ -2,6 +2,7 @@ use std::cmp::Ordering;
 
 #[allow(non_camel_case_types)]
 //I want it to look like the traditional prim types
+#[derive(Debug)]
 pub struct c32 {
     real: i16,
     imaginary: i16
