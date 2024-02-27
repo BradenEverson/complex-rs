@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 #[allow(non_camel_case_types)]
 //I want it to look like the traditional prim types
 pub struct c32 {
@@ -90,10 +92,50 @@ impl std::ops::RemAssign<c32> for c32 {
         self.imaginary %= rhs.imaginary;
     }
 }
-
 impl c32 {
     pub fn new(real: i16, imaginary: i16) -> c32 {
         c32 { real, imaginary }
     }
+    pub fn modulus(&self) -> f32 {
+        (self.real.pow(2) as f32 + self.imaginary.pow(2) as f32).sqrt()
+    }
     
 }
+
+impl PartialEq for c32 {
+    fn eq(&self, other: &Self) -> bool {
+        self.real == other.real && self.imaginary == other.imaginary
+    }
+}
+
+impl PartialOrd for c32 {
+    fn ge(&self, other: &Self) -> bool {
+        self.modulus() >= other.modulus()
+    }
+    fn gt(&self, other: &Self) -> bool {
+        self.modulus() > other.modulus()
+    }
+    fn lt(&self, other: &Self) -> bool {
+        self.modulus() < other.modulus()
+    }
+    fn le(&self, other: &Self) -> bool {
+        self.modulus() <= other.modulus()
+    }
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+            if self == other {
+                return Some(Ordering::Equal);
+            } else if self.modulus() > other.modulus() {
+                return Some(Ordering::Greater);
+            } else if self.modulus() < other.modulus() {
+                return Some(Ordering::Less);
+            }
+            None
+    }
+}
+
+impl From<(i16, i16)> for c32 {
+    fn from(value: (i16, i16)) -> Self {
+        c32::new(value.0, value.1)
+    } 
+}
+
